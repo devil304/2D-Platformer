@@ -82,10 +82,10 @@ public class Movement : MonoBehaviour
             if (grounded)
             {
                 MyAnimator.SetInteger("HorizontalD", Mathf.RoundToInt(HorizontalDir));
-                velocity.x = Time.deltaTime * Speed * HorizontalDir;
+                velocity.x = Speed * HorizontalDir;
             }
             else
-                velocity.x = Time.deltaTime * SpeedInAir * HorizontalDir;
+                velocity.x = SpeedInAir * HorizontalDir;
         }
         else
         {

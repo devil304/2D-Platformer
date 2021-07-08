@@ -387,6 +387,8 @@ GameObject:
   - component: {fileID: 532322218}
   - component: {fileID: 532322217}
   - component: {fileID: 532322219}
+  - component: {fileID: 532322221}
+  - component: {fileID: 532322220}
   m_Layer: 0
   m_Name: Map
   m_TagString: Ground
@@ -2543,10 +2545,85 @@ TilemapCollider2D:
   m_Material: {fileID: 6200000, guid: ac716b6067e035a41a2b22de94318324, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_UsedByComposite: 1
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!66 &532322220
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532322215}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: ac716b6067e035a41a2b22de94318324, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths:
+  - m_Collider: {fileID: 532322219}
+    m_ColliderPaths:
+    - - X: 300000000
+        Y: 50000000
+      - X: 230000000
+        Y: 50000000
+      - X: 230000000
+        Y: 40000000
+      - X: 300000000
+        Y: 40000000
+    - - X: 210000000
+        Y: 30000000
+      - X: 140000000
+        Y: 30000000
+      - X: 140000000
+        Y: -10000000
+      - X: -20000000
+        Y: -10000000
+      - X: -20000000
+        Y: -80000000
+      - X: 210000000
+        Y: -80000000
+  m_CompositePaths:
+    m_Paths:
+    - - {x: 29.999971, y: 4}
+      - {x: 29.999971, y: 5}
+      - {x: 23, y: 4.999971}
+      - {x: 23.000029, y: 4}
+    - - {x: 20.999971, y: -8}
+      - {x: 20.999971, y: 3}
+      - {x: 14, y: 2.999971}
+      - {x: 13.999971, y: -1}
+      - {x: -2, y: -1.0000293}
+      - {x: -1.9999708, y: -8}
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!50 &532322221
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532322215}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: ac716b6067e035a41a2b22de94318324, type: 2}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &613922947
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,8 +2790,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
-  Speed: 500
-  SpeedInAir: 50
+  Speed: 4
+  SpeedInAir: 2
 --- !u!1 &895332911
 GameObject:
   m_ObjectHideFlags: 0
