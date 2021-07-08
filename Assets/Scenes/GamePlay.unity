@@ -2790,8 +2790,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
+  JumpMaxTime: 0.5
   Speed: 4
   SpeedInAir: 2
+  JumpSpeed: 9
+  fallingSpeed: 9
 --- !u!1 &895332911
 GameObject:
   m_ObjectHideFlags: 0
