@@ -14,10 +14,11 @@ public class Movement : MonoBehaviour
     public bool grounded = false;
     [SerializeField] MainIput MainInputAsset;
     float HorizontalDir = 0;
-    bool jump = false;
+    [SerializeField] bool jump = false;
     [SerializeField] float JumpMaxTime = 2f;
-    float jumpTime = 0f;
-    [SerializeField] float Speed = 1, SpeedInAir = 0.5f, JumpSpeed = 7.5f, fallingSpeed = 10f;
+    [SerializeField] float jumpTime = 0f;
+    [SerializeField] float slowingJumpTime = 0;
+    [SerializeField] float Speed = 1, JumpSpeed = 7.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +30,10 @@ public class Movement : MonoBehaviour
         MainInputAsset.Main.Jump.performed += perf => {
             if(perf.phase == InputActionPhase.Performed)
             {
-                if(grounded)
+                if (grounded)
+                {
                     jump = true;
+                }
             }  
         };
         MainInputAsset.Main.Jump.canceled += canc => {
@@ -55,43 +58,67 @@ public class Movement : MonoBehaviour
             }
         };
     }
-
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        if (jump && jumpTime < JumpMaxTime)
+        if(jump)
+            MyAnimator.SetInteger("VerticalD", 1);
+        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position - (Vector2.up * (MyBoxCollider2D.size.y / 10)), MyBoxCollider2D.size * 0.9f, 0, Vector2.down, 0f, LayerMask.GetMask("Default"));
+        if (hit && hit.collider.gameObject.tag == "Ground")
         {
-            jumpTime += Time.deltaTime;
-        }
-        else
-            jump = false;
-        RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position-(Vector2.up*(MyBoxCollider2D.size.y/4)), MyBoxCollider2D.size*0.9f,0,Vector2.down,1f,LayerMask.GetMask("Default"));
-        if(hit && hit.collider.gameObject.tag == "Ground")
-        {
+            if (!grounded)
+            {
+                if (slowingJumpTime != 0)
+                    slowingJumpTime = 0;
+                if (jumpTime > 0)
+                    jumpTime = 0;
+            }
             grounded = true;
-            jumpTime = 0;
         }
         else
         {
             //Debug.Log(hit.collider.gameObject.name);
             grounded = false;
         }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if ((jump || slowingJumpTime!=0) && jumpTime < JumpMaxTime)
+        {
+            jumpTime += Time.deltaTime;
+        }
+        if(jumpTime>= JumpMaxTime)
+            jump = false;
         Vector2 velocity = MyRigidbody2D.velocity;
         if (jump)
-            velocity.y = JumpSpeed;
+        {
+            if (jumpTime >= 0.08) {
+                if (jumpTime >= (JumpMaxTime * (4f/5f))) {
+                    slowingJumpEnd(velocity);
+                }
+                else
+                {
+                    velocity.y = JumpSpeed;
+                }
+            } else
+                MyAnimator.SetBool("Jump", true);
+        }else if (!jump && jumpTime > 0)
+        {
+            if (jumpTime < JumpMaxTime)
+            {
+                slowingJumpEnd(velocity);
+            }
+            if (jumpTime >= (slowingJumpTime + (JumpMaxTime / 5f)))
+            {
+                jumpTime = 0;
+                slowingJumpTime = 0;
+            }
+        }
         if (!grounded)
         {
-            if (MyRigidbody2D.velocity.y > 0)
-            {
-                MyAnimator.SetInteger("VerticalD", 1);
-            }
-            else
+            if (MyRigidbody2D.velocity.y <= 0)
             {
                 MyAnimator.SetInteger("VerticalD", -1);
-            }
-            if (!jump)
-            {
-                velocity.y = -fallingSpeed;
             }
         }
         else
@@ -101,13 +128,8 @@ public class Movement : MonoBehaviour
         }
         if (HorizontalDir != 0)
         {
-            if (grounded)
-            {
-                MyAnimator.SetInteger("HorizontalD", Mathf.RoundToInt(HorizontalDir));
-                velocity.x = Speed * HorizontalDir;
-            }
-            else
-                velocity.x = SpeedInAir * HorizontalDir;
+            MyAnimator.SetInteger("HorizontalD", Mathf.RoundToInt(HorizontalDir));
+            velocity.x = Speed * HorizontalDir;
         }
         else
         {
@@ -118,10 +140,18 @@ public class Movement : MonoBehaviour
         MyRigidbody2D.velocity = velocity;
     }
 
+    void slowingJumpEnd(Vector2 velocity)
+    {
+        if (slowingJumpTime == 0)
+            slowingJumpTime = jumpTime;
+        Debug.Log((1f - ((JumpMaxTime / 5f) - (jumpTime - (slowingJumpTime)))));
+        velocity.y = JumpSpeed * (1f - ((JumpMaxTime / 5f) - (jumpTime - (slowingJumpTime))));
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         if(MyBoxCollider2D)
-            Gizmos.DrawWireCube(transform.position - (Vector3.up * (MyBoxCollider2D.size.y/4)), MyBoxCollider2D.size * 0.9f);
+            Gizmos.DrawWireCube(transform.position - (Vector3.up * (MyBoxCollider2D.size.y/10)), MyBoxCollider2D.size * 0.9f);
     }
 }
