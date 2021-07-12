@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3862888630489567039}
   - component: {fileID: 3862888630489567038}
   - component: {fileID: 3862888630489566980}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Goblin
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 8057813366764255779, guid: 2c8d65dc1ab1f2a4098cd1c77540fa46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -169,5 +169,6 @@ MonoBehaviour:
   MaxHP: 3
   DelayOnPatrolPoint: 2
   Speed: 2
+  CoinPrefab: {fileID: 5005231263332351079, guid: 4061d1e94426a504e8286490e4cc1967, type: 3}
   MinPlayerDist: 4
   AttackDist: 1.05

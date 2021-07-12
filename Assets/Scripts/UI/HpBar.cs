@@ -6,10 +6,12 @@ using UnityEngine;
 public class HpBar : MonoBehaviour
 {
     [SerializeField] GameObject HeartPrefab;
+    [Tooltip("Space between heart icons")]
     [SerializeField] float space;
 
     List<Animator> Hearts = new List<Animator>();
 
+    //Set value of HB Bar
     public void SetVal(int ActualVal)
     {
         for(int i = 0; i < Hearts.Count; i++)
@@ -21,6 +23,7 @@ public class HpBar : MonoBehaviour
         }
     }
 
+    //Set maximum value of HP Bar and adjust icons count
     public void SetMaxVal(int MV)
     {
         while (Hearts.Count > MV)

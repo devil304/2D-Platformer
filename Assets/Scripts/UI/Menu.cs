@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     [SerializeField] Animator FadeOut;
+
     public void LoadLevelByName(string lvlName)
     {
         StartCoroutine(FO(lvlName));
     }
 
+    //Fade Out and load level
     IEnumerator FO(string lvlName)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(lvlName);

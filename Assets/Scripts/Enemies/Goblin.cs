@@ -6,20 +6,24 @@ public class Goblin : EnemiesBase
 {
     Player player;
 
+    [Tooltip("Minimum distance to player for detection")]
     [SerializeField] float MinPlayerDist = 3;
+    [Tooltip("Minimum distance to player to attack")]
     [SerializeField] float AttackDist = 0.75f;
 
     private new void Awake()
     {
         base.Awake();
-        player = FindObjectOfType<Player>();
+        player = Player.instance;
     }
 
+
+    //Go after player if in distance, if not do basic enemy things
     private new void Update()
     {
         if (player && Vector2.Distance(player.transform.position, transform.position) > MinPlayerDist)
             base.Update();
-        else
+        else if(!MyAnimator.GetBool("Death"))
         {
             int Dir = 0;
             if (Vector2.Distance(player.transform.position, transform.position)>AttackDist)

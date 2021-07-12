@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Canvas PauseScreen;
     [SerializeField] Canvas DeathScreen;
 
+    //Make Game manager singleton and setup
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         };
     }
 
+    //Display death screen
     public void RaportPlayerDeath()
     {
         DeathScreen.enabled = true;
@@ -46,6 +48,8 @@ public class GameManager : MonoBehaviour
     public void AddCoin()
     {
         coins++;
+        if (coins % 10 == 0)
+            Player.instance.Heal();
         CoinCounter.text = coins.ToString();
     }
 }

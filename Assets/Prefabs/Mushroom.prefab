@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3066689874887569172}
   - component: {fileID: 3066689874887569173}
   - component: {fileID: 3066689874887569194}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mushroom
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 3288888100976258158, guid: 63f87422afd51ff4198f88934c4b908f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -172,3 +172,4 @@ MonoBehaviour:
   MaxHP: 3
   DelayOnPatrolPoint: 2
   Speed: 1
+  CoinPrefab: {fileID: 5005231263332351079, guid: 4061d1e94426a504e8286490e4cc1967, type: 3}

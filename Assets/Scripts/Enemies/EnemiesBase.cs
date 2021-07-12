@@ -4,15 +4,23 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
+
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Collider2D))]
 public class EnemiesBase : MonoBehaviour
 {
     [SerializeField] Vector2[] PatrolPoints;
     [SerializeField] int MaxHP = 3;
+    [Tooltip("Minimum and maximum value of coins to drop after enemy death")]
+    [SerializeField] int MinCoins = 1, MaxCoins = 10;
+    [Tooltip("Wait on patrol point after reaching it")]
     [SerializeField] float DelayOnPatrolPoint = 2f;
+    [Tooltip("Walk speed")]
     [SerializeField] protected float Speed = 0.5f;
+    [SerializeField] GameObject CoinPrefab;
 
     protected Animator MyAnimator;
+    Collider2D MyColllider2D;
 
     int ActualHP;
     int PatrolPointGoing = 0;
@@ -21,9 +29,11 @@ public class EnemiesBase : MonoBehaviour
     protected void Awake()
     {
         MyAnimator = GetComponent<Animator>();
-
+        MyColllider2D = GetComponent<Collider2D>();
         ActualHP = MaxHP;
     }
+
+    //check if patrol points are not in the ground
     void Start()
     {
 #if UNITY_EDITOR
@@ -40,7 +50,7 @@ public class EnemiesBase : MonoBehaviour
 #endif
     }
 
-    // Update is called once per frame
+    //go betweend patrol points, wait after reaching actual patrol point or stay still of no patrol points defined
     protected void Update()
     {
         if (PatrolPoints.Length > 0)
@@ -83,6 +93,7 @@ public class EnemiesBase : MonoBehaviour
         }
     }
 
+    //wait after reaching actual patrol point
     IEnumerator WaitAndGoNext()
     {
         MyAnimator.SetInteger("HorizontalD", 0);
@@ -90,7 +101,9 @@ public class EnemiesBase : MonoBehaviour
         PatrolPointGoing = (PatrolPointGoing + 1) % PatrolPoints.Length;
         Arrive = false;
     }
+
     IEnumerator cor = null;
+    //take damage
     public void TakingDMG(int val)
     {
         MyAnimator.SetBool("Hit",true);
@@ -103,9 +116,13 @@ public class EnemiesBase : MonoBehaviour
         StartCoroutine(cor);
         ActualHP -= val;
         if (ActualHP <= 0)
+        {
+            MyColllider2D.enabled = false;
             MyAnimator.SetBool("Death", true);
+        }
     }
 
+    //stop enemy for a while after being hitted
     IEnumerator StayAfterHit(float Delay)
     {
         Hitted = true;
@@ -114,11 +131,18 @@ public class EnemiesBase : MonoBehaviour
         cor = null;
     }
 
+    //kill enemy
     void Death()
     {
+        for(int i = 0; i < Random.Range(MinCoins, MaxCoins+1); i++)
+        {
+            Rigidbody2D coin = Instantiate(CoinPrefab, transform.position,Quaternion.identity).GetComponent<Rigidbody2D>();
+            coin.AddForce(Vector2.up*5,ForceMode2D.Impulse);
+        }
         Destroy(gameObject);
     }
 
+    //draw patrol points after selecting enemy in editor
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
