@@ -1,7 +1,16 @@
 fileFormatVersion: 2
 guid: 301641bca330b72489f9b41e6aedd112
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 8463552643324742004
+    second: health_menu_hud_0
+  - first:
+      213: -60312989830990277
+    second: health_menu_hud_1
+  - first:
+      213: 8040718319896801475
+    second: health_menu_hud_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -89,7 +98,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: health_menu_hud_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 3
+        width: 23
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 3, z: 4, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 479803b8944947570800000000000000
+      internalID: 8463552643324742004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_menu_hud_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 15
+        width: 48
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 5, z: 4, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3638c1c7a9b92ff0800000000000000
+      internalID: -60312989830990277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: health_menu_hud_3
+      rect:
+        serializedVersion: 2
+        x: 25
+        y: 5
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c0bc6cd5be569f60800000000000000
+      internalID: 8040718319896801475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

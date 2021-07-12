@@ -25,7 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] float KickBack = 3f;
     [SerializeField] float Speed = 1, JumpSpeed = 7.5f, DashSpeed = 10f;
     [SerializeField] int MaxHP = 3;
-    [SerializeField] Slider HPBar;
+    [SerializeField] HpBar HPBar;
 
     private void Awake()
     {
@@ -34,10 +34,11 @@ public class Player : MonoBehaviour
         MyBoxCollider2D = GetComponent<BoxCollider2D>();
         MySpriteRenderer = GetComponent<SpriteRenderer>();
 
-        HPBar.maxValue = MaxHP;
-        HPBar.value = MaxHP;
+        HPBar.SetMaxVal(MaxHP);
+        HPBar.SetVal(MaxHP);
 
         ActualHP = MaxHP;
+
     }
 
     void Start()
@@ -186,13 +187,14 @@ public class Player : MonoBehaviour
     void Hit()
     {
         ActualHP--;
-        HPBar.value = ActualHP;
+        HPBar.SetVal(ActualHP);
     }
 
     public void Death()
     {
         GameManager.instance.MainInputAsset.Disable();
         Time.timeScale = 0;
+        GameManager.instance.RaportPlayerDeath();
         Destroy(gameObject);
     }
 

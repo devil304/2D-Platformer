@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { private set; get; }
     public MainIput MainInputAsset;
+
+    [SerializeField] Canvas PauseScreen;
+    [SerializeField] Canvas DeathScreen;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -25,12 +29,20 @@ public class GameManager : MonoBehaviour
         MainInputAsset.Main.Pause.performed += perf => {
             if (perf.phase == InputActionPhase.Performed)
             {
+                PauseScreen.enabled = !PauseScreen.enabled;
                 Time.timeScale = Time.timeScale == 1 ? 0 : 1;
             }
         };
     }
-[SerializeField] TextMeshProUGUI CoinCounter;
+
+    public void RaportPlayerDeath()
+    {
+        DeathScreen.enabled = true;
+    }
+
+    [SerializeField] TextMeshProUGUI CoinCounter;
     int coins = 0;
+
     public void AddCoin()
     {
         coins++;
