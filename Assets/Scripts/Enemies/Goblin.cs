@@ -21,7 +21,7 @@ public class Goblin : EnemiesBase
     //Go after player if in distance, if not do basic enemy things
     private new void Update()
     {
-        if (player && Vector2.Distance(player.transform.position, transform.position) > MinPlayerDist)
+        if (player!=null && Vector2.Distance(player.transform.position, transform.position) > MinPlayerDist)
             base.Update();
         else if(!MyAnimator.GetBool("Death"))
         {
