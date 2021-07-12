@@ -4,22 +4,21 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(Animator))]
 public class EnemiesBase : MonoBehaviour
 {
     [SerializeField] Vector2[] PatrolPoints;
     [SerializeField] int MaxHP = 3;
     [SerializeField] float DelayOnPatrolPoint = 2f;
-    [SerializeField] float Speed = 0.5f;
+    [SerializeField] protected float Speed = 0.5f;
 
-    Animator MyAnimator;
+    protected Animator MyAnimator;
 
     int ActualHP;
     int PatrolPointGoing = 0;
-    bool Hitted = false;
+    protected bool Hitted = false;
     bool Arrive = false;
-    private void Awake()
+    protected void Awake()
     {
         MyAnimator = GetComponent<Animator>();
 
@@ -42,7 +41,7 @@ public class EnemiesBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (PatrolPoints.Length > 0)
         {
@@ -77,6 +76,10 @@ public class EnemiesBase : MonoBehaviour
             {
                 MyAnimator.SetInteger("HorizontalD", 0);
             }
+        }
+        else
+        {
+            MyAnimator.SetInteger("HorizontalD", 0);
         }
     }
 
